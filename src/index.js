@@ -95,20 +95,20 @@ client.on(Event.InteractionCreate, async interaction => {
     const command = client.commands.get(interaction.commandName);
 
     if (!command) {
-        console.error(`${interactions.commandName} is not a command`)
+        console.error(`${interactions.commandName} is not a command`);
         return;
     };
 
     try {
-        await command.execute(interaction);
-    } else {
+        await command.execute(interaction)
+    } catch(error) {
         console.error(error);
         if (interraction.replied || interaction.deferred) {
             interaction.followUp({ content: "Error while executing command", ephemeral: true});
         } else {
             await interaction.reply({ content: "Error while executing command", ephemeral: true});
         };
-    }
-})
+    };
+});
 
 client.login(process.env.BOT_TOKEN);
