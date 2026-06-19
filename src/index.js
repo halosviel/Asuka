@@ -1,9 +1,6 @@
-require('dotenv').config();
-
-const { REST, Routes } = require('discord.js');
-const deployCommands = async () => {
-
-};
+require("dotenv").config();
+const fs = require("fs");
+const path = require("path");
 
 const {
     Client,
@@ -15,8 +12,10 @@ const {
     Events
 } = require("discord.js");
 
+const PREFIX = ".";
+
 const client = new Client({
-    intent: [
+    intents: [
         GatewayIntentBits.Guilds,
         GatewayIntentBits.GuildMessages,
         GatewayIntentBits.MessageContent,
@@ -32,28 +31,22 @@ const client = new Client({
 
 client.commands = new Collection();
 
-const fs = require("fs");
-const path = require("path");
-
-const commandsPath = path.join(__dirname, "commands")
+const commandsPath = path.join(__dirname, "..", "commands")
 const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith(".js"));
 
 for (const file of commandFiles) {
     const filePath = path.join(commandsPath, file);
     const command = require(filePath);
 
-    if ("data" in command && "execute" in command) {
-        client.command.set(command.data.name, command);
+    if ("name" in command && "execute" in command) {
+        client.commands.set(command.name, command);
     } else {
-        console.log(`command ${filePath} missing a required "data" or "execute" property..?`);
+        console.log(`command ${filePath} missing a required "name" or "execute" property..?`);
     };
 };
 
 client.once(Events.ClientReady, async () => {
     console.log(`Ready! Logged in as ${client.user.tag}`);
-
-    await deployCommands();
-    console.log("Commands deployed globally..?");
 
     const statusType = process.env.BOT_STATUS || "online";
     const activityType = process.env.ACTIVITY_TYPE || "PLAYING";
@@ -79,7 +72,6 @@ client.once(Events.ClientReady, async () => {
         activities: [{
             name: activityName,
             type: activityTypeMap[activityType],
-
         }]
     });
 
@@ -87,27 +79,21 @@ client.once(Events.ClientReady, async () => {
     console.log(`Bot activity set to ${activityType} ${activityName}`);
 });
 
-client.on(Event.InteractionCreate, async interaction => {
-    if (!interaction.isChatInputCommand()) {
-        return;
-    };
+client.on(Events.MessageCreate, async message => {
+    if (message.author.bot) return;
+    if (!message.content.startsWith(PREFIX)) return;
 
-    const command = client.commands.get(interaction.commandName);
+    const args = message.content.slice(PREFIX.length).trim().split(/ +/);
+    const commandName = args.shift().toLowerCase();
 
-    if (!command) {
-        console.error(`${interactions.commandName} is not a command`);
-        return;
-    };
+    const command = client.commands.get(commandName);
+    if (!command) return;
 
     try {
-        await command.execute(interaction)
-    } catch(error) {
+        await command.execute(message, args);
+    } catch (error) {
         console.error(error);
-        if (interraction.replied || interaction.deferred) {
-            interaction.followUp({ content: "Error while executing command", ephemeral: true});
-        } else {
-            await interaction.reply({ content: "Error while executing command", ephemeral: true});
-        };
+        message.reply("Error while executing command");
     };
 });
 
