@@ -5,6 +5,9 @@ require("dotenv").config();
 const fs = require("fs");
 const path = require("path");
 
+// my imports :D
+const emitFatalError = require("./exceptionHandler.js")
+
 // discord.js packages
 const {
     Client,
@@ -125,9 +128,7 @@ client.on(Events.MessageCreate, async message => {
     try {
         await command.run(message, args);
     } catch (err) {
-        const errMessage = `[${commandName}] cmd exec err: ${err}`;
-        console.error(err);
-        await message.channel.send("```diff\nCOMMAND EXECUTION FAILURE\n- " + errMessage + "```");
+        await emitFatalError(message, commandName, err)
     };
 });
 
