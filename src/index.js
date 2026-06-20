@@ -61,8 +61,8 @@ for (const file of commandFiles) {
         console.error(`missing entry "help" - for command ${file}`);
         continue;
     };
-    if (typeof(command.name) !== "string") {
-        console.error(`string expected for entry "help", got ${typeof(command.name)} - for command "${file}"`);
+    if (typeof(command.help) !== "object") {
+        console.error(`object expected for entry "help", got ${typeof(command.help)} - for command "${file}"`);
         continue;
     };
 
@@ -135,6 +135,9 @@ client.on(Events.MessageCreate, async message => {
     }
     
     try {
+        command.help.options.forEach(element => {
+            message.channel.send(toString(element.names))
+        });
         if (args[0] == "-h") {
             await message.channel.send(command.help);
             return;
