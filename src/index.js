@@ -66,19 +66,19 @@ for (const file of commandFiles) {
     client.commands.set(command.name, command);
 };
 
+const statusMap = {
+    "ONLINE": PresenceUpdateStatus.Online,
+    "IDLE": PresenceUpdateStatus.Idle,
+    "DO_NOT_DISTURB": PresenceUpdateStatus.DoNotDisturb,
+    "INVISIBLE": PresenceUpdateStatus.Invisible
+};
+
 const activityTypeMap = {
     "PLAYING": ActivityType.Playing,
     "WATCHING": ActivityType.Watching,
     "LISTENING": ActivityType.Listening,
     "STREAMING": ActivityType.Streaming,
     "COMPETING": ActivityType.Competing
-};
-
-const statusMap = {
-    "ONLINE": PresenceUpdateStatus.Online,
-    "IDLE": PresenceUpdateStatus.Idle,
-    "DO_NOT_DISTURB": PresenceUpdateStatus.DoNotDisturb,
-    "INVISIBLE": PresenceUpdateStatus.Invisible
 };
 
 // set presence on ready
