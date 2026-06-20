@@ -3,7 +3,10 @@ module.exports = {
     help: {
         usage: "ping [OPTIONS?]",
         options: [
-            ["h", "help", "prints this help"]
+            {
+                names: ["h", "help"],
+                description: "prints this help"
+            }
         ]
     },
     async run(message, _) {
