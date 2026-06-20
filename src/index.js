@@ -116,7 +116,7 @@ client.on(Events.MessageCreate, async message => {
 
     const command = client.commands.get(commandName);
     if (!command) return;
-    console.log(args)
+    
     try {
         await command.run(message, args);
     } catch (error) {
