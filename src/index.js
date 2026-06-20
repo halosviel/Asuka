@@ -43,7 +43,7 @@ for (const file of commandFiles) {
     const filePath = path.join(commandsPath, file);
     const command = require(filePath);
 
-    // validate for "name" entry + "run" function
+    // validate for name str + run()
     if (!("name" in command)) {
         console.error(`missing entry "name" - for command ${file}`);
         continue;
@@ -66,27 +66,27 @@ for (const file of commandFiles) {
     client.commands.set(command.name, command);
 };
 
+export const activityTypeMap = {
+    "PLAYING": ActivityType.Playing,
+    "WATCHING": ActivityType.Watching,
+    "LISTENING": ActivityType.Listening,
+    "STREAMING": ActivityType.Streaming,
+    "COMPETING": ActivityType.Competing
+};
+
+export const statusMap = {
+    "ONLINE": PresenceUpdateStatus.Online,
+    "IDLE": PresenceUpdateStatus.Idle,
+    "DO_NOT_DISTURB": PresenceUpdateStatus.DoNotDisturb,
+    "INVISIBLE": PresenceUpdateStatus.Invisible
+};
+
 client.once(Events.ClientReady, async () => {
     console.log("running")
 
-    const statusType = process.env.BOT_STATUS || "online";
+    const statusType = process.env.BOT_STATUS || "ONLINE";
     const activityType = process.env.ACTIVITY_TYPE || "PLAYING";
     const activityName = process.env.ACTIVITY_NAME || "Discord";
-
-    const activityTypeMap = {
-        "PLAYING": ActivityType.Playing,
-        "WATCHING": ActivityType.Watching,
-        "LISTENING": ActivityType.Listening,
-        "STREAMING": ActivityType.Streaming,
-        "COMPETING": ActivityType.Competing
-    };
-
-    const statusMap = {
-        "ONLINE": PresenceUpdateStatus.Online,
-        "IDLE": PresenceUpdateStatus.Idle,
-        "DO_NOT_DISTURB": PresenceUpdateStatus.DoNotDisturb,
-        "INVISIBLE": PresenceUpdateStatus.Invisible
-    };
 
     client.user.setPresence({
         status: statusMap[statusType],
