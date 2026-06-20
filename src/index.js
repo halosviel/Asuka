@@ -15,6 +15,7 @@ const {
     PresenceUpdateStatus,
     Events
 } = require("discord.js");
+const strict = require("assert/strict");
 
 // instantiate class - singleton??
 // see constructor -> https://discord.js.org/docs/packages/discord.js/main/Client:Class
@@ -114,6 +115,8 @@ client.on(Events.MessageCreate, async message => {
     const args = message.content.slice(process.env.BOT_PREFIX.length).trim().split(/ +/);
     const commandName = args.shift().toLowerCase();
 
+    // fetch command (required module)
+    // TODO: validation here? idk, it'll just be clone
     const command = client.commands.get(commandName);
     if (!command) {
         return;
@@ -121,9 +124,9 @@ client.on(Events.MessageCreate, async message => {
     
     try {
         await command.run(message, args);
-    } catch (error) {
-        console.error(error);
-        message.reply("Error while running command");
+    } catch (err) {
+        const errMessage = `cmd exec err (${commandName}): ${errMessage}`
+        console.error(err);
     };
 });
 
