@@ -66,7 +66,7 @@ for (const file of commandFiles) {
     client.commands.set(command.name, command);
 };
 
-export const activityTypeMap = {
+const activityTypeMap = {
     "PLAYING": ActivityType.Playing,
     "WATCHING": ActivityType.Watching,
     "LISTENING": ActivityType.Listening,
@@ -74,13 +74,14 @@ export const activityTypeMap = {
     "COMPETING": ActivityType.Competing
 };
 
-export const statusMap = {
+const statusMap = {
     "ONLINE": PresenceUpdateStatus.Online,
     "IDLE": PresenceUpdateStatus.Idle,
     "DO_NOT_DISTURB": PresenceUpdateStatus.DoNotDisturb,
     "INVISIBLE": PresenceUpdateStatus.Invisible
 };
 
+// set presence on ready
 client.once(Events.ClientReady, async () => {
     console.log("running")
 
