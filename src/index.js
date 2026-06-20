@@ -145,8 +145,8 @@ client.on(Events.MessageCreate, async message => {
             
             message.channel.send(
                 `**Usage:** ${command.help.usage}` +
-                `\n\n**OPTIONS:**\n` +
-                ``
+                `\n\n**OPTIONS:**` +
+                optionsStr
             );
 
             return;
