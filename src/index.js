@@ -115,7 +115,9 @@ client.on(Events.MessageCreate, async message => {
     const commandName = args.shift().toLowerCase();
 
     const command = client.commands.get(commandName);
-    if (!command) return;
+    if (!command) {
+        return;
+    }
     
     try {
         await command.run(message, args);
