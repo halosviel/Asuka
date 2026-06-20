@@ -135,13 +135,23 @@ client.on(Events.MessageCreate, async message => {
     }
     
     try {
-        command.help.options.forEach(element => {
-            message.channel.send(toString(element.names))
-        });
-        if (args[0] == "-h") {
-            await message.channel.send(command.help);
+        if (args[0] == "-h" || args[0] == "--help") {
+            let optionsStr = ""
+
+            command.help.options.forEach(option => {
+                const str = `\n-${option.names[0]}     --${option.names[1]}       ${option.description}`;
+                optionsStr = optionsStr + str;
+            });
+            
+            message.channel.send(
+                `**Usage:** ${command.help.usage}` +
+                `\n\n**OPTIONS:**\n` +
+                ``
+            );
+
             return;
         };
+
         await command.run(message, args);
     } catch (err) {
         await emitFatalError(message, commandName, err)
