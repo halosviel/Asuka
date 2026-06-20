@@ -62,6 +62,7 @@ for (const file of commandFiles) {
         continue;
     };
 
+    // write k,v pair to commands dict
     client.commands.set(command.name, command);
 };
 
@@ -81,10 +82,10 @@ client.once(Events.ClientReady, async () => {
     };
 
     const statusMap = {
-        "online": PresenceUpdateStatus.Online,
-        "idle": PresenceUpdateStatus.Idle,
-        "doNotDisturb": PresenceUpdateStatus.DoNotDisturb,
-        "invisible": PresenceUpdateStatus.Invisible
+        "ONLINE": PresenceUpdateStatus.Online,
+        "IDLE": PresenceUpdateStatus.Idle,
+        "DO_NOT_DISTURB": PresenceUpdateStatus.DoNotDisturb,
+        "INVISIBLE": PresenceUpdateStatus.Invisible
     };
 
     client.user.setPresence({
