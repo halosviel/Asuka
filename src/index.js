@@ -1,7 +1,11 @@
+// load config (must be done asap)
 require("dotenv").config();
+
+// built-in node.js modules
 const fs = require("fs");
 const path = require("path");
 
+// discord.js packages
 const {
     Client,
     GatewayIntentBits,
@@ -12,6 +16,8 @@ const {
     Events
 } = require("discord.js");
 
+// instantiate class - singleton??
+// see constructor -> https://discord.js.org/docs/packages/discord.js/main/Client:Class
 const client = new Client({
     intents: [
         GatewayIntentBits.Guilds,
@@ -27,24 +33,39 @@ const client = new Client({
     ]
 });
 
-client.commands = new Collection();
+// Add commands to custom d.js array
+client.commands = new Collection(); // create d.js custom array
 
-const commandsPath = path.join(__dirname, "..", "commands")
-let commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith(".js"));
+const commandsPath = path.join(__dirname, "..", "commands") // where __dirname is /home/halosviel/Local/Projects/Asuka/src & ".." is 1dir up
+const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith(".js")); // grab array of file names & exclude non ".s" suffixes
 
 for (const file of commandFiles) {
     const filePath = path.join(commandsPath, file);
     const command = require(filePath);
 
-    if ("name" in command && "execute" in command) {
-        client.commands.set(command.name, command);
-    } else {
-        console.log(`command ${filePath} missing a required "name" or "execute" property..?`);
+    // validate for "name" entry + "run" function
+    if (!("name" in command)) {
+        console.error(`missing entry "name" - for command ${file}`);
+        continue;
     };
+    if (typeof(command.name) !== "string") {
+        console.error(`string expected for entry "name", got ${typeof(command.name)} - for command "${file}"`);
+        continue;
+    };
+
+    if (!("run" in command)) {
+        console.error(`missing function "run" for command ${file}`);
+        continue;
+    };
+    if (typeof(command.run) !== "function") {
+        console.error(`function expected for entry "run", got ${typeof(command.run)} - for command "${file}"`);
+        continue;
+    };
+
+    client.commands.set(command.name, command);
 };
 
 client.once(Events.ClientReady, async () => {
-    //console.log(`Ready! Logged in as ${client.user.tag}`);
     console.log("running")
 
     const statusType = process.env.BOT_STATUS || "online";
@@ -79,7 +100,10 @@ client.once(Events.ClientReady, async () => {
 });
 
 client.on(Events.MessageCreate, async message => {
-    if (message.author.bot) return;
+    console.log(message)
+    if (message.author.bot){
+        return;
+    }
     if (!message.content.startsWith(process.env.BOT_PREFIX)) return;
 
     const args = message.content.slice(process.env.BOT_PREFIX.length).trim().split(/ +/);
@@ -89,10 +113,10 @@ client.on(Events.MessageCreate, async message => {
     if (!command) return;
 
     try {
-        await command.execute(message, args);
+        await command.run(message, args);
     } catch (error) {
         console.error(error);
-        message.reply("Error while executing command");
+        message.reply("Error while running command");
     };
 });
 

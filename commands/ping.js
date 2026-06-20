@@ -1,6 +1,6 @@
 module.exports = {
     name: "ping",
-    async execute(message) {
+    async run(message) {
         const sent = await message.reply("Pinging...");
         const pingTime = sent.createdTimestamp - message.createdTimestamp;
 
