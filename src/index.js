@@ -101,12 +101,14 @@ client.once(Events.ClientReady, async () => {
     //console.log(`Bot activity set to ${activityType} ${activityName}`);
 });
 
+// on message create event
 client.on(Events.MessageCreate, async message => {
-    console.log(message)
     if (message.author.bot){
         return;
     }
-    if (!message.content.startsWith(process.env.BOT_PREFIX)) return;
+    if (!message.content.startsWith(process.env.BOT_PREFIX)) {
+        return;
+    }
 
     const args = message.content.slice(process.env.BOT_PREFIX.length).trim().split(/ +/);
     const commandName = args.shift().toLowerCase();
