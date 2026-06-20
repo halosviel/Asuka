@@ -101,7 +101,7 @@ client.once(Events.ClientReady, async () => {
     //console.log(`Bot activity set to ${activityType} ${activityName}`);
 });
 
-// on message create event
+// detect every new message (questionable - no wonder why its legacy LOL)
 client.on(Events.MessageCreate, async message => {
     if (message.author.bot){
         return;
@@ -110,12 +110,13 @@ client.on(Events.MessageCreate, async message => {
         return;
     }
 
+    // get everything after the command, separated by a space (table.concat equiv.)
     const args = message.content.slice(process.env.BOT_PREFIX.length).trim().split(/ +/);
     const commandName = args.shift().toLowerCase();
 
     const command = client.commands.get(commandName);
     if (!command) return;
-
+    console.log(args)
     try {
         await command.run(message, args);
     } catch (error) {
