@@ -111,7 +111,7 @@ client.on(Events.MessageCreate, async message => {
         return;
     }
 
-    // get everything after the command, separated by a space (table.concat equiv.)
+    // get everything after the command, separated by a space (table.concat equiv. reversed)
     const args = message.content.slice(process.env.BOT_PREFIX.length).trim().split(/ +/);
     const commandName = args.shift().toLowerCase();
 
@@ -125,8 +125,9 @@ client.on(Events.MessageCreate, async message => {
     try {
         await command.run(message, args);
     } catch (err) {
-        const errMessage = `cmd exec err (${commandName}): ${errMessage}`
+        const errMessage = `[${commandName}] cmd exec err: ${err}`;
         console.error(err);
+        message.reply("**cmd exec err**\n```diff\n- " + errMessage + "```");
     };
 });
 
