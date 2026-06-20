@@ -12,8 +12,6 @@ const {
     Events
 } = require("discord.js");
 
-const PREFIX = ".";
-
 const client = new Client({
     intents: [
         GatewayIntentBits.Guilds,
@@ -32,7 +30,7 @@ const client = new Client({
 client.commands = new Collection();
 
 const commandsPath = path.join(__dirname, "..", "commands")
-const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith(".js"));
+let commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith(".js"));
 
 for (const file of commandFiles) {
     const filePath = path.join(commandsPath, file);
@@ -46,7 +44,8 @@ for (const file of commandFiles) {
 };
 
 client.once(Events.ClientReady, async () => {
-    console.log(`Ready! Logged in as ${client.user.tag}`);
+    //console.log(`Ready! Logged in as ${client.user.tag}`);
+    console.log("running")
 
     const statusType = process.env.BOT_STATUS || "online";
     const activityType = process.env.ACTIVITY_TYPE || "PLAYING";
@@ -75,15 +74,15 @@ client.once(Events.ClientReady, async () => {
         }]
     });
 
-    console.log(`Bot status set to ${statusType}`);
-    console.log(`Bot activity set to ${activityType} ${activityName}`);
+    //console.log(`Bot status set to ${statusType}`);
+    //console.log(`Bot activity set to ${activityType} ${activityName}`);
 });
 
 client.on(Events.MessageCreate, async message => {
     if (message.author.bot) return;
-    if (!message.content.startsWith(PREFIX)) return;
+    if (!message.content.startsWith(process.env.BOT_PREFIX)) return;
 
-    const args = message.content.slice(PREFIX.length).trim().split(/ +/);
+    const args = message.content.slice(process.env.BOT_PREFIX.length).trim().split(/ +/);
     const commandName = args.shift().toLowerCase();
 
     const command = client.commands.get(commandName);
