@@ -1,9 +1,9 @@
 module.exports = {
-    name "ping",
+    name: "ping",
     async run(message) {
-        const sent = await message.reply("Pinging...");
-        const pingTime = sent.createdTimestamp - message.createdTimestamp;
+        const now = Date.now();
+        const ping = now - message.createdTimestamp;
 
-        await sent.edit(`Bot Latency: ${pingTime}ms\nAPI Latency: ${Math.round(message.client.ws.ping)}ms`);
+        await message.channel.send(`pong~! In ${ping}ms`);
     },
 };
