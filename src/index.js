@@ -57,6 +57,15 @@ for (const file of commandFiles) {
         continue;
     };
 
+    if (!("help" in command)) {
+        console.error(`missing entry "help" - for command ${file}`);
+        continue;
+    };
+    if (typeof(command.name) !== "string") {
+        console.error(`string expected for entry "help", got ${typeof(command.name)} - for command "${file}"`);
+        continue;
+    };
+
     if (!("run" in command)) {
         console.error(`missing function "run" for command ${file}`);
         continue;
@@ -126,6 +135,10 @@ client.on(Events.MessageCreate, async message => {
     }
     
     try {
+        if (args[0] == "-h") {
+            await message.channel.send(command.help);
+            return;
+        };
         await command.run(message, args);
     } catch (err) {
         await emitFatalError(message, commandName, err)
