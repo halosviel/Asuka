@@ -127,7 +127,7 @@ client.on(Events.MessageCreate, async message => {
     } catch (err) {
         const errMessage = `[${commandName}] cmd exec err: ${err}`;
         console.error(err);
-        message.reply("**cmd exec err**\n```diff\n- " + errMessage + "```");
+        await message.channel.send("```diff\nCOMMAND EXECUTION FAILURE\n- " + errMessage + "```");
     };
 });
 
