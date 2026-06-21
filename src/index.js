@@ -137,13 +137,14 @@ client.on(Events.MessageCreate, async message => {
     try {
         if (args[0] == "-h" || args[0] == "--help") {
             let optionsStr = ""
+            const optionsList = [...command.help.options]
 
-            command.help.options.push({
+            optionsList.push({
                 names: ["h", "help"],
                 description: "prints this help"
             })
 
-            command.help.options.forEach(option => {
+            optionsList.forEach(option => {
                 const str = `\n-${option.names[0]}     --${option.names[1]}       ${option.description}`;
                 optionsStr = optionsStr + str;
             });
