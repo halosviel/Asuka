@@ -135,6 +135,7 @@ client.on(Events.MessageCreate, async message => {
     }
     
     try {
+        // help cmd
         if (args[0] == "-h" || args[0] == "--help") {
             let optionsStr = ""
             const optionsList = [...command.help.options]
@@ -158,6 +159,7 @@ client.on(Events.MessageCreate, async message => {
             return;
         };
 
+        // run cmd
         await command.run(message, args);
     } catch (err) {
         await emitFatalError(message, commandName, err)
