@@ -138,7 +138,7 @@ client.on(Events.MessageCreate, async message => {
         // help cmd
         if (args[0] == "-h" || args[0] == "--help") {
             let optionsStr = ""
-            const optionsList = [...command.help.options]
+            const optionsList = [...command.help.options] // clone array; diff from lua wtf
 
             optionsList.push({
                 names: ["h", "help"],
