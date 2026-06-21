@@ -13,6 +13,6 @@ module.exports = {
         const now = Date.now();
         const ping = now - message.createdTimestamp;
 
-        await message.channel.send(`pong~ in ${ping}ms!`);
+        await message.channel.send(`🏓 pong~ in ${ping}ms!`);
     },
 };
