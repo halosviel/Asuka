@@ -2,12 +2,7 @@ module.exports = {
     name: "ping",
     help: {
         usage: "ping [OPTIONS?]",
-        options: [
-            {
-                names: ["h", "help"],
-                description: "prints this help"
-            }
-        ]
+        options: []
     },
     async run(message, _) {
         const now = Date.now();
