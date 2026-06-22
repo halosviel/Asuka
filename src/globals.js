@@ -20,5 +20,20 @@ module.exports = {
             Partials.User,
             Partials.GuildMember
         ]
-    })
+    }),
+
+    statusMap = {
+        "ONLINE": PresenceUpdateStatus.Online,
+        "IDLE": PresenceUpdateStatus.Idle,
+        "DO_NOT_DISTURB": PresenceUpdateStatus.DoNotDisturb,
+        "INVISIBLE": PresenceUpdateStatus.Invisible
+    },
+    
+    activityTypeMap = {
+        "PLAYING": ActivityType.Playing,
+        "WATCHING": ActivityType.Watching,
+        "LISTENING": ActivityType.Listening,
+        "STREAMING": ActivityType.Streaming,
+        "COMPETING": ActivityType.Competing
+    }
 }
