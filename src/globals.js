@@ -23,17 +23,17 @@ module.exports = {
     }),
 
     statusMap = {
-        "ONLINE": PresenceUpdateStatus.Online,
-        "IDLE": PresenceUpdateStatus.Idle,
-        "DO_NOT_DISTURB": PresenceUpdateStatus.DoNotDisturb,
-        "INVISIBLE": PresenceUpdateStatus.Invisible
+        "online": PresenceUpdateStatus.Online,
+        "idle": PresenceUpdateStatus.Idle,
+        "donotdisturb": PresenceUpdateStatus.DoNotDisturb,
+        "invisible": PresenceUpdateStatus.Invisible
     },
     
     activityTypeMap = {
-        "PLAYING": ActivityType.Playing,
-        "WATCHING": ActivityType.Watching,
-        "LISTENING": ActivityType.Listening,
-        "STREAMING": ActivityType.Streaming,
-        "COMPETING": ActivityType.Competing
+        "playing": ActivityType.Playing,
+        "watching": ActivityType.Watching,
+        "listening": ActivityType.Listening,
+        "streaming": ActivityType.Streaming,
+        "competing": ActivityType.Competing
     }
 }
