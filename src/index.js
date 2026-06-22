@@ -7,7 +7,8 @@ const path = require("path");
 
 // my imports :D
 const emitFatalError = require("./exceptionHandler.js")
-const client = require("./globals.js").client
+const globals = require("./globals.js")
+const client = globals.client
 
 // discord.js packages
 const {
@@ -69,10 +70,10 @@ client.once(Events.ClientReady, async () => {
     const activityName = process.env.ACTIVITY_NAME || "Discord";
 
     client.user.setPresence({
-        status: statusMap[statusType],
+        status: globals.statusMap[statusType],
         activities: [{
             name: activityName,
-            type: activityTypeMap[activityType],
+            type: globals.activityTypeMap[activityType],
         }]
     });
 
