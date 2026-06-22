@@ -4,6 +4,8 @@ const {
     Partials,
 } = require("discord.js");
 
+// instantiate class - singleton??
+// see constructor -> https://discord.js.org/docs/packages/discord.js/main/Client:Class
 module.exports = {
     client: new Client({
         intents: [
