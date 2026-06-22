@@ -22,7 +22,7 @@ const strict = require("assert/strict");
 
 // instantiate class - singleton??
 // see constructor -> https://discord.js.org/docs/packages/discord.js/main/Client:Class
-const client = new Client({
+/*const client = new Client({
     intents: [
         GatewayIntentBits.Guilds,
         GatewayIntentBits.GuildMessages,
@@ -35,7 +35,7 @@ const client = new Client({
         Partials.User,
         Partials.GuildMember
     ]
-});
+});*/
 
 // Add commands to custom d.js array
 client.commands = new Collection(); // create d.js custom array
