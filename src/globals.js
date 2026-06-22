@@ -22,14 +22,14 @@ module.exports = {
         ]
     }),
 
-    statusMap = {
+    statusMap: {
         "online": PresenceUpdateStatus.Online,
         "idle": PresenceUpdateStatus.Idle,
         "donotdisturb": PresenceUpdateStatus.DoNotDisturb,
         "invisible": PresenceUpdateStatus.Invisible
     },
     
-    activityTypeMap = {
+    activityTypeMap: {
         "playing": ActivityType.Playing,
         "watching": ActivityType.Watching,
         "listening": ActivityType.Listening,
