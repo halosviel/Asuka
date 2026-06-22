@@ -6,9 +6,9 @@ const fs = require("fs");
 const path = require("path");
 
 // my imports :D
-const emitFatalError = require("./exceptionHandler.js")
-const globals = require("./globals.js")
-const client = globals.client
+const emitFatalError = require("./exceptionHandler.js");
+const globals = require("./globals.js");
+const client = globals.client;
 
 // discord.js packages
 const {
