@@ -5,7 +5,7 @@ const {
 } = require("discord.js");
 
 // instantiate class - singleton??
-// see constructor -> https://discord.js.org/docs/packages/discord.js/main/Client:Class
+// see constructor -> https://discord.js.org/docs/packages/discord.js/main/
 module.exports = {
     client: new Client({
         intents: [
