@@ -1,6 +1,8 @@
 const {
     Client,
     GatewayIntentBits,
+    ActivityType,
+    PresenceUpdateStatus,
     Partials,
 } = require("discord.js");
 
