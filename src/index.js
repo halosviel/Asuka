@@ -60,27 +60,12 @@ for (const file of commandFiles) {
     client.commands.set(command.name, command);
 };
 
-const statusMap = {
-    "ONLINE": PresenceUpdateStatus.Online,
-    "IDLE": PresenceUpdateStatus.Idle,
-    "DO_NOT_DISTURB": PresenceUpdateStatus.DoNotDisturb,
-    "INVISIBLE": PresenceUpdateStatus.Invisible
-};
-
-const activityTypeMap = {
-    "PLAYING": ActivityType.Playing,
-    "WATCHING": ActivityType.Watching,
-    "LISTENING": ActivityType.Listening,
-    "STREAMING": ActivityType.Streaming,
-    "COMPETING": ActivityType.Competing
-};
-
 // set presence on ready
 client.once(Events.ClientReady, async () => {
     console.log("running")
 
-    const statusType = process.env.BOT_STATUS || "ONLINE";
-    const activityType = process.env.ACTIVITY_TYPE || "PLAYING";
+    const statusType = process.env.BOT_STATUS || "online";
+    const activityType = process.env.ACTIVITY_TYPE || "watching";
     const activityName = process.env.ACTIVITY_NAME || "Discord";
 
     client.user.setPresence({
