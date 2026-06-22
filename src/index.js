@@ -7,35 +7,16 @@ const path = require("path");
 
 // my imports :D
 const emitFatalError = require("./exceptionHandler.js")
+const client = require("./globals.js").client
 
 // discord.js packages
 const {
-    Client,
-    GatewayIntentBits,
-    Partials,
     Collection,
     ActivityType,
     PresenceUpdateStatus,
     Events
 } = require("discord.js");
 const strict = require("assert/strict");
-
-// instantiate class - singleton??
-// see constructor -> https://discord.js.org/docs/packages/discord.js/main/Client:Class
-/*const client = new Client({
-    intents: [
-        GatewayIntentBits.Guilds,
-        GatewayIntentBits.GuildMessages,
-        GatewayIntentBits.MessageContent,
-        GatewayIntentBits.GuildMembers
-    ],
-    partials: [
-        Partials.Channel,
-        Partials.Message,
-        Partials.User,
-        Partials.GuildMember
-    ]
-});*/
 
 // Add commands to custom d.js array
 client.commands = new Collection(); // create d.js custom array
